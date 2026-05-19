@@ -17,18 +17,4 @@
       </Content>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Controllers\" />
-      <Folder Include="Data\" />
-      <Folder Include="DTOs\" />
-      <Folder Include="Entities\" />
-      <Folder Include="Enums\" />
-      <Folder Include="Hubs\" />
-      <Folder Include="Mappers\" />
-      <Folder Include="Repositories\Impl\" />
-      <Folder Include="Repositories\Interfaces\" />
-      <Folder Include="Services\Impl\" />
-      <Folder Include="Services\Interfaces\" />
-    </ItemGroup>
-
 </Project>
