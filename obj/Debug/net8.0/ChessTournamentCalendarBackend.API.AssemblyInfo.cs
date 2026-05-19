@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ChessTournamentCalendarBackend.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3b3256be416aa391032ab6703b7765cea4f8cce9")]
 [assembly: System.Reflection.AssemblyProductAttribute("ChessTournamentCalendarBackend.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ChessTournamentCalendarBackend.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
