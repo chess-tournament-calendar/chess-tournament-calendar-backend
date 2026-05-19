@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\ChessTournamentCalendarBackend.API.props" />
+</Project>

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "BGsuy84zroM2nGP5oFEOvG2E3GMrGhfu79Lh4EQswns=",
+  "Source": "ChessTournamentCalendarBackend.API",
+  "BasePath": "_content/ChessTournamentCalendarBackend.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
