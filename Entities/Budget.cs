@@ -21,7 +21,7 @@ public class Budget
 
     [Required]
     [Column("total_amount", TypeName = "decimal(18,2)")]
-    public decimal TotalAmount { get; set; }
+    public int TotalAmount { get; set; }
 
     [Required]
     [Column("currency")]

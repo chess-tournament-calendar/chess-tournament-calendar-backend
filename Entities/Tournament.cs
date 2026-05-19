@@ -23,10 +23,7 @@ public class Tournament
     [Required]
     [Column("end_date")]
     public DateTime EndDate { get; set; }
-
-    [Column("is_planning_to_play")]
-    public bool IsPlanningToPlay { get; set; }
-
+    
     [Column("rounds")]
     public int Rounds { get; set; }
 
