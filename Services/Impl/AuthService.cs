@@ -26,8 +26,8 @@ public class AuthService : IAuthService
 
     public async Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto request)
     {
-        var existingUser = await _userRepository.GetByEmailAsync(request.Email);
-        if (existingUser != null)
+        
+        if ( await _userRepository.ExistsByEmailAsync(request.Email))
         {
             // User already exists, return response with IsSuccess = false
             return new RegisterResponseDto(IsSuccess: false);
