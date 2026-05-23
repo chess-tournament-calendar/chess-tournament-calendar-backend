@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using ChessTournamentCalendarBackend.API.Data;
 using ChessTournamentCalendarBackend.API.Repositories.Interfaces;
@@ -12,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Asp.Versioning;
+using ChessTournamentCalendarBackend.API.DTOs;
 using TournamentApp.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -115,6 +117,13 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdminRole", policy => 
+        policy.RequireRole("Admin"));
+});
+
 //
 // 6️⃣ VERSIONING
 //
@@ -134,6 +143,7 @@ builder.Services.AddApiVersioning(options =>
 // Services
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -156,9 +166,33 @@ app.UseHttpsRedirection();
 //
 // Authentication middleware order important
 //
+app.UseStatusCodePages(async context =>
+{
+    var response = context.HttpContext.Response;
+    response.ContentType = "application/json";
 
+    
+    var jsonOptions = new JsonSerializerOptions 
+    { 
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase 
+    };
+
+    if (response.StatusCode == 401)
+    {
+        await response.WriteAsync(JsonSerializer.Serialize(
+            ApiResponse<object>.ErrorResponse("Please login first to access this resource."), jsonOptions
+        ));
+    }
+    else if (response.StatusCode == 403)
+    {
+        await response.WriteAsync(JsonSerializer.Serialize(
+            ApiResponse<object>.ErrorResponse("You do not have permission to perform this action."), jsonOptions
+        ));
+    }
+});
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllers();
 

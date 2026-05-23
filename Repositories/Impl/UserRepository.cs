@@ -24,9 +24,18 @@ public class UserRepository : IUserRepository
         return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
     }
 
-    public async Task<List<User>> GetAllAsync()
+    public async Task<(IEnumerable<User> Users, int TotalCount)> GetAllUsersAsync(int pageNumber, int pageSize)
     {
-        return await _context.Users.ToListAsync();
+        // 1. Get the total number of records for pagination math
+        var totalCount = await _context.Users.CountAsync();
+
+        // 2. Fetch only the required slice of data
+        var users = await _context.Users
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (users, totalCount);
     }
 
     public async Task AddAsync(User user)

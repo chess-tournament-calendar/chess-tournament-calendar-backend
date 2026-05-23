@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ChessTournamentCalendarBackend.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260519113854_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260523144559_update")]
+    partial class update
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,8 +38,9 @@ namespace ChessTournamentCalendarBackend.API.Migrations
                         .HasColumnType("character varying(3)")
                         .HasColumnName("currency");
 
-                    b.Property<int>("PlanType")
-                        .HasColumnType("integer")
+                    b.Property<string>("PlanType")
+                        .IsRequired()
+                        .HasColumnType("text")
                         .HasColumnName("plan_type");
 
                     b.Property<decimal>("TotalAmount")
@@ -116,10 +117,6 @@ namespace ChessTournamentCalendarBackend.API.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("is_confirmed");
 
-                    b.Property<bool>("IsPlanningToPlay")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_planning_to_play");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -134,8 +131,9 @@ namespace ChessTournamentCalendarBackend.API.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("start_date");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer")
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text")
                         .HasColumnName("type");
 
                     b.HasKey("Id");
@@ -160,6 +158,12 @@ namespace ChessTournamentCalendarBackend.API.Migrations
                         .HasColumnType("character varying(255)")
                         .HasColumnName("email");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasColumnName("name");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text")
@@ -174,12 +178,14 @@ namespace ChessTournamentCalendarBackend.API.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("refresh_token_expiry_time");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("integer")
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("text")
                         .HasColumnName("role");
 
-                    b.Property<int>("Title")
-                        .HasColumnType("integer")
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text")
                         .HasColumnName("title");
 
                     b.HasKey("Id");

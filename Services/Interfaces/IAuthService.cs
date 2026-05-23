@@ -8,6 +8,8 @@ public interface IAuthService
     Task<RegisterResponseDto> RegisterAsync(RegisterRequestDto request);
     Task<AuthResponseDto> LoginAsync(LoginRequestDto request);
     Task<AuthResponseDto?> RefreshTokenAsync(string accessToken, string refreshToken);
+
+    Task<ChangePasswordResponseDto> ChangePasswordAsync(Guid userId, ChangePasswordRequestDto request);
     
     int RefreshTokenExpirationDays { get; }
 }
