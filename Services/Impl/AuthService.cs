@@ -84,5 +84,27 @@ public class AuthService : IAuthService
 
         return new AuthResponseDto(accessToken, refreshToken, expiresAt);
     }
+    
+    public async Task<ChangePasswordResponseDto> ChangePasswordAsync(Guid userId, ChangePasswordRequestDto request)
+    { 
+        var user = await _userRepository.GetByIdAsync(userId);
+        if (user == null) 
+            return new ChangePasswordResponseDto(false);
+
+        
+        if (user.Password != request.CurrentPassword) 
+            return new ChangePasswordResponseDto(false);
+
+        
+        user.Password = request.NewPassword;
+        
+        user.RefreshToken = null;
+        user.RefreshTokenExpiryTime = null;
+
+        
+        await _userRepository.UpdateAsync(user);
+
+        return new ChangePasswordResponseDto(true);
+    }
     public int RefreshTokenExpirationDays => _jwtService.RefreshTokenExpirationDays;
 }

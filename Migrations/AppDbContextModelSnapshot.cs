@@ -35,8 +35,9 @@ namespace ChessTournamentCalendarBackend.API.Migrations
                         .HasColumnType("character varying(3)")
                         .HasColumnName("currency");
 
-                    b.Property<int>("PlanType")
-                        .HasColumnType("integer")
+                    b.Property<string>("PlanType")
+                        .IsRequired()
+                        .HasColumnType("text")
                         .HasColumnName("plan_type");
 
                     b.Property<decimal>("TotalAmount")
@@ -113,10 +114,6 @@ namespace ChessTournamentCalendarBackend.API.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("is_confirmed");
 
-                    b.Property<bool>("IsPlanningToPlay")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_planning_to_play");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -131,8 +128,9 @@ namespace ChessTournamentCalendarBackend.API.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("start_date");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer")
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text")
                         .HasColumnName("type");
 
                     b.HasKey("Id");

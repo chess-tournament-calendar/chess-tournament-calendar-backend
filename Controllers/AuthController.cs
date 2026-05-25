@@ -3,6 +3,7 @@ using ChessTournamentCalendarBackend.API.DTOs;
 using ChessTournamentCalendarBackend.API.DTOs.RequestDTOs;
 using ChessTournamentCalendarBackend.API.DTOs.ResponseDTOs;
 using ChessTournamentCalendarBackend.API.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChessTournamentCalendarBackend.API.Controllers;
@@ -10,7 +11,7 @@ namespace ChessTournamentCalendarBackend.API.Controllers;
 [ApiVersion("1.0")]
 [Route("api/{version:apiVersion}/[controller]")]
 [ApiController]
-public class AuthController : ControllerBase
+public class AuthController : BaseController
 {
     private readonly IAuthService _authService;
 
@@ -66,6 +67,38 @@ public class AuthController : ControllerBase
             ApiResponse<LoginResponseDto>.SuccessResponse(
                 responseData,
                 "Login successful."
+            )
+        );
+    }
+    
+    [Authorize] // 👈 Sadece token'ı olan (giriş yapmış) kullanıcılar buraya istek atabilir
+    [HttpPost("change-password")]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequestDto request)
+    {
+        var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(userIdClaim))
+        {
+            return Unauthorized(
+                ApiResponse<object>.ErrorResponse("User identification failed.")
+            );
+        }
+
+        var userId = Guid.Parse(userIdClaim);
+
+        var result = await _authService.ChangePasswordAsync(userId, request);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(
+                ApiResponse<object>.ErrorResponse("Invalid current password.")
+            );
+        }
+
+        return Ok(
+            ApiResponse<object>.SuccessResponse(
+                null,
+                "Password changed successfully. Please log in again with your new password."
             )
         );
     }

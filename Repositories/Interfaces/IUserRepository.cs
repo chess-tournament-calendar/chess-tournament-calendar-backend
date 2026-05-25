@@ -7,7 +7,7 @@ public interface IUserRepository
     // READ
     Task<User?> GetByIdAsync(Guid id);
     Task<User?> GetByEmailAsync(string email);
-    Task<List<User>> GetAllAsync();
+    Task<(IEnumerable<User> Users, int TotalCount)> GetAllUsersAsync(int pageNumber, int pageSize);
 
     // CREATE
     Task AddAsync(User user);
